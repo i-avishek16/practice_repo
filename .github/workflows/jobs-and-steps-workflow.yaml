@@ -66,4 +66,4 @@ jobs:
 
       - name: Final Success Message
         if: success()
-        run: echo "Workflow executed Successfully"
+        run: echo "Workflow executed Successfully ✅"
