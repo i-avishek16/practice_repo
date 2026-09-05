@@ -1,0 +1,56 @@
+name: My First Workflow
+
+on:
+  # Automatic trigger: runs on push to main branch
+  push:
+    branches:
+      - main
+
+  # Manual trigger: allows workflow to be run from Actions tab
+  workflow_dispatch:
+
+  # Scheduled trigger: runs at 5:00 AM UTC Monday–Friday
+  schedule:
+    - cron: '0 5 * * 1-5'
+
+  # Automatic trigger: runs on pull requests targeting main branch
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Use latest Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+
+      - name: Print a message
+        run: echo "Hello, world!"
+
+  pr-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Request Event
+        run: echo "Workflow triggered by PR event on main branch"
+
+  scheduled-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scheduled Event
+        run: echo "Workflow triggered at 5:00 AM UTC (Mon–Fri)"
+
+  manual-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manual Trigger
+        run: echo "Workflow triggered manually via workflow_dispatch"
