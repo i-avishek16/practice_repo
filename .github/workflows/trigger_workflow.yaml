@@ -1,0 +1,40 @@
+name: My First Workflow
+
+on:
+  # Automatic trigger: runs on push to main
+  push:
+    branches:
+      - main
+
+  # Manual trigger: allows you to run workflow from Actions tab
+  workflow_dispatch:
+
+  # Scheduled trigger: runs every hour
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Print a message
+        run: echo "Hello, world!"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Testing all the things..."
+
+  scheduled-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, World! (Scheduled)"
