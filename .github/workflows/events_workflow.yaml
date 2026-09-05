@@ -1,0 +1,50 @@
+name: Event Driven Workflow
+
+on:
+  # Trigger when code is pushed to the main branch
+  push:
+    branches:
+      - main
+
+  # Trigger when a pull request is opened (not on other PR activities)
+  pull_request:
+    types:
+      - opened
+
+  # Trigger when an issue is opened (not on other issue activities)
+  issues:
+    types:
+      - opened
+
+  # Trigger when a release is published
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run build
+        run: echo "Building project on push to main..."
+
+  pr-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Request Opened
+        run: echo "Running workflow for a newly opened PR..."
+
+  issue-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue Opened
+        run: echo "Workflow triggered by a new issue..."
+
+  release-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Published
+        run: echo "Workflow triggered by a new release..."
